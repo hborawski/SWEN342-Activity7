@@ -2,7 +2,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import akka.actor.UntypedActor;
@@ -10,33 +12,41 @@ import akka.actor.UntypedActor;
 
 public class ScanActor extends UntypedActor {
 	private ArrayList<String> lines = new ArrayList<String>();
-	private String filename;
-	private Pattern pattern;
 	@Override
 	public void onReceive(Object arg0) throws Exception {
-		// TODO Auto-generated method stub
 		if(arg0 instanceof Configure){
 			Configure con = (Configure)arg0;
-			this.pattern = con.getPattern();
-			this.filename = con.getFilename();
+			readFile(con.getFilename(), con.getPattern());
 		}
 		
 	}
 	
-	public void readFile(String filename){
+	public void readFile(String filename, Pattern p) throws IOException{
 		//read file and store lines in ArrayList
-		FileReader fr;
+		FileReader fr = null;
+		BufferedReader reader = null;
 		try{
 			fr = new FileReader(new File(filename));
+			reader = new BufferedReader(fr);
+			String s;
+			while((s = reader.readLine()) != null){
+				Matcher m = p.matcher(s);
+				if(m.matches()){
+					lines.add(s);
+				}
+			}
 		}catch(FileNotFoundException e){
-			e.printStackTrace();
+			e.printStackTrace();			
+		}finally{
+			fr.close();
+			reader.close();
+			
 		}
-		BufferedReader reader = new BufferedReader(fr);
 		
 		// read lines and match to regex
 	}
 	
-	public void sendMessage(){
+	public void sendMessage(Found f){
 		//construct and send found object to CollectionActor
 		
 	}
