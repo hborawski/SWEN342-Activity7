@@ -19,4 +19,8 @@ public class FileCount {
 	public ArrayList<String> getFilenames(){
 		return filenames;
 	}
+	
+	public Pattern getPattern(){
+		return pattern;
+	}
 }

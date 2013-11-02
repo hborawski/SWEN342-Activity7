@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+
+import akka.actor.ActorRef;
+import akka.actor.Actors;
+import akka.actor.Actors.*;
 import akka.actor.UntypedActor;
 
 public class CollectionActor extends UntypedActor {
@@ -7,7 +11,7 @@ public class CollectionActor extends UntypedActor {
 		private int count;
 		
 		public CollectionActor(){
-			actors = new ArrayList<ScanActor>();
+			actors = new ArrayList<ActorRef>();
 			messages = 0;
 		}
         @Override
@@ -17,9 +21,9 @@ public class CollectionActor extends UntypedActor {
                 		FileCount fc = (FileCount)arg0;
                 		count = fc.getCount();
                         for(int i = 0; i < count; i++){
-                        	ActorRef actor = new ScanActor();
+                        	ActorRef actor = akka.actor.Actors.actorOf(ScanActor.class);
                         	actors.add(actor);
-                        	actors.get(i).tell(new Configure( fc.filenames.get(i), fc.pattern, this));                       	
+                        	actors.get(i).tell(new Configure( fc.getFilenames().get(i), fc.getPattern(), (ActorRef)this));                       	
                         }
                         
                 }else if(arg0 instanceof Found){
@@ -31,7 +35,7 @@ public class CollectionActor extends UntypedActor {
                         }
                         messages++;
                         if(messages == count){
-                        	Actors.registry().shutdown();
+                        	Actors.registry().shutdownAll();
                         }
                 }
         }
