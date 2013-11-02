@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 import akka.actor.ActorRef;
 import akka.actor.Actors;
-import akka.actor.Actors.*;
 import akka.actor.UntypedActor;
 
 public class CollectionActor extends UntypedActor {
