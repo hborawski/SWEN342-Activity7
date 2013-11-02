@@ -1,11 +1,12 @@
+import java.util.regex.Pattern;
 import java.util.ArrayList;
 
 public class FileCount {
 	private int count;
 	private ArrayList<String> filenames;
-	private String pattern;
+	private Pattern pattern;
 	
-	public FileCount(int count, ArrayList<String> filenames, String pattern){
+	public FileCount(int count, ArrayList<String> filenames, Pattern pattern){
 		this.count = count;
 		this.filenames = filenames;
 		this.pattern = pattern;
