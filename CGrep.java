@@ -34,12 +34,14 @@ if(args.length > 0){
 			Pattern p = Pattern.compile(pString);
 			FileCount fileCount = new FileCount(files.size());
 			ActorRef colActor = akka.actor.Actors.actorOf(CollectionActor.class);
+			colActor.start();
 			colActor.tell(fileCount);
 			
 
-    		ActorRef actor = akka.actor.Actors.actorOf(ScanActor.class);
     		
         	for(int i=0; i< files.size(); i++){
+        		ActorRef actor = akka.actor.Actors.actorOf(ScanActor.class);
+        		actor.start();
         		actor.tell(new Configure( files.get(i), p, colActor));                       	
         		actors.add(actor);
         	}
