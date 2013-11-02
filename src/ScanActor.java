@@ -46,12 +46,14 @@ public class ScanActor extends UntypedActor {
 			fr = new FileReader(new File(filename));
 			reader = new BufferedReader(fr);
 			String s;
+			int lineNumber=0;
 			while((s = reader.readLine()) != null){
 				//Match line to pattern
 				Matcher m = p.matcher(s);
 				if(m.matches()){ // Check if it actually matches
-					lines.add(s);
+					lines.add(lineNumber+" "+s);
 				}
+				lineNumber++;
 			}
 		}catch(FileNotFoundException e){
 			e.printStackTrace();			
