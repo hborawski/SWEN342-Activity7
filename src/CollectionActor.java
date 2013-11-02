@@ -1,16 +1,16 @@
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 import akka.actor.ActorRef;
 import akka.actor.Actors;
 import akka.actor.UntypedActor;
 
 public class CollectionActor extends UntypedActor {
-		private ArrayList<ActorRef> actors;
+//		private ArrayList<ActorRef> actors;
 		private int messages;
 		private int count;
 		
 		public CollectionActor(){
-			actors = new ArrayList<ActorRef>();
+//			actors = new ArrayList<ActorRef>();
 			messages = 0;
 		}
         @Override
