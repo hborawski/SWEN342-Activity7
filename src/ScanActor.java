@@ -10,6 +10,10 @@ import java.util.regex.Pattern;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 
+/**
+ * ScanActor is a class that reads a file and finds lines matching a pattern
+ * @author Harris Borawski
+ */
 public class ScanActor extends UntypedActor {
 	private ArrayList<String> lines = new ArrayList<String>();
 	private ActorRef collect;
@@ -42,7 +46,7 @@ public class ScanActor extends UntypedActor {
 	 * @throws IOException error needed to disappear
 	 */
 	public void readFile(String filename, Pattern p) throws IOException{
-		//read file and store lines in ArrayList
+		//read file and store matching lines in ArrayList
 		FileReader fr = null;
 		BufferedReader reader = null;
 		try{
@@ -50,8 +54,9 @@ public class ScanActor extends UntypedActor {
 			reader = new BufferedReader(fr);
 			String s;
 			while((s = reader.readLine()) != null){
+				//Match line to pattern
 				Matcher m = p.matcher(s);
-				if(m.matches()){
+				if(m.matches()){ // Check if it actually matches
 					lines.add(s);
 				}
 			}
@@ -62,8 +67,6 @@ public class ScanActor extends UntypedActor {
 			reader.close();
 			sendMessage(new Found(filename, lines));
 		}
-		
-		// read lines and match to regex
 	}
 	
 	/**
@@ -71,7 +74,6 @@ public class ScanActor extends UntypedActor {
 	 * @param f the Found object to send
 	 */
 	public void sendMessage(Found f){
-		//construct and send found object to CollectionActor
 		collect.tell(f);
 	}
 
