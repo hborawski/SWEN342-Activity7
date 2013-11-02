@@ -18,14 +18,6 @@ public class ScanActor extends UntypedActor {
 	private ArrayList<String> lines = new ArrayList<String>();
 	private ActorRef collect;
 	
-	/**Constructor
-	 * 
-	 * @param ref a reference to the collection actor so it can be sent messages
-	 */
-	public ScanActor(final ActorRef ref){
-		collect = ref;
-	}
-	
 	/**
 	 * onReceive method controls what happens when this actor gets a message
 	 * @param message the message that was given to the actor
@@ -35,6 +27,7 @@ public class ScanActor extends UntypedActor {
 		if(message instanceof Configure){
 			Configure con = (Configure)message;
 			readFile(con.getFilename(), con.getPattern());
+			collect = con.getActorRef();
 		}
 		
 	}

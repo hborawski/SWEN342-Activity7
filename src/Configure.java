@@ -1,13 +1,17 @@
-import java.util.regex.*;
+import java.util.regex.Pattern;
+
+import akka.actor.ActorRef;
 
 
 public class Configure {
 	private String filename;
 	private Pattern pattern;
+	private ActorRef collect;
 	
-	public Configure(String filename, Pattern pattern){
+	public Configure(String filename, Pattern pattern, ActorRef c){
 		this.filename = filename;
 		this.pattern = pattern;
+		this.collect = c;
 	}
 	
 	public String getFilename(){
@@ -16,5 +20,9 @@ public class Configure {
 	
 	public Pattern getPattern(){
 		return pattern;
+	}
+	
+	public ActorRef getActorRef(){
+		return collect;
 	}
 }
