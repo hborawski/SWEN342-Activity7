@@ -10,6 +10,11 @@ public class CollectionActor extends UntypedActor {
 			//start scan actors
 		}else if(arg0 instanceof Found){
 			//print found objects
+			Found found = (Found)arg0;
+			System.out.println(found.getFilename());
+			for(String s : found.getLines()){
+				System.out.println(s);
+			}
 		}
 	}
 

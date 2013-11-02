@@ -9,4 +9,12 @@ public class Configure {
 		this.filename = filename;
 		this.pattern = pattern;
 	}
+	
+	public String getFilename(){
+		return filename;
+	}
+	
+	public Pattern getPattern(){
+		return pattern;
+	}
 }
