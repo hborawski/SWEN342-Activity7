@@ -9,23 +9,38 @@ import java.util.regex.Pattern;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
-import akka.actor.*;
 
 public class ScanActor extends UntypedActor {
 	private ArrayList<String> lines = new ArrayList<String>();
 	private ActorRef collect;
+	
+	/**Constructor
+	 * 
+	 * @param ref a reference to the collection actor so it can be sent messages
+	 */
 	public ScanActor(final ActorRef ref){
 		collect = ref;
 	}
+	
+	/**
+	 * onReceive method controls what happens when this actor gets a message
+	 * @param message the message that was given to the actor
+	 */
 	@Override
-	public void onReceive(Object arg0) throws Exception {
-		if(arg0 instanceof Configure){
-			Configure con = (Configure)arg0;
+	public void onReceive(Object message) throws Exception {
+		if(message instanceof Configure){
+			Configure con = (Configure)message;
 			readFile(con.getFilename(), con.getPattern());
 		}
 		
 	}
 	
+	/**
+	 * Reads the lines of a file and matches them to the pattern 
+	 * @param filename the file to read
+	 * @param p the pattern to match with
+	 * @throws IOException error needed to disappear
+	 */
 	public void readFile(String filename, Pattern p) throws IOException{
 		//read file and store lines in ArrayList
 		FileReader fr = null;
@@ -51,6 +66,10 @@ public class ScanActor extends UntypedActor {
 		// read lines and match to regex
 	}
 	
+	/**
+	 * Sends a message to the collection actor
+	 * @param f the Found object to send
+	 */
 	public void sendMessage(Found f){
 		//construct and send found object to CollectionActor
 		collect.tell(f);
