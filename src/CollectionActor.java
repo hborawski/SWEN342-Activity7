@@ -19,11 +19,13 @@ public class CollectionActor extends UntypedActor {
                 if(arg0 instanceof FileCount){
                 		FileCount fc = (FileCount)arg0;
                 		count = fc.getCount();
-                        for(int i = 0; i < count; i++){
+                		
+/*                        for(int i = 0; i < count; i++){
                         	ActorRef actor = akka.actor.Actors.actorOf(ScanActor.class);
                         	actors.add(actor);
                         	actors.get(i).tell(new Configure( fc.getFilenames().get(i), fc.getPattern(), (ActorRef)this));                       	
                         }
+*/
                         
                 }else if(arg0 instanceof Found){
                         //print found objects
