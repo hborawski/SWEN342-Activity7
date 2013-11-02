@@ -7,11 +7,16 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
-
+import akka.actor.*;
 
 public class ScanActor extends UntypedActor {
 	private ArrayList<String> lines = new ArrayList<String>();
+	private ActorRef collect;
+	public ScanActor(final ActorRef ref){
+		collect = ref;
+	}
 	@Override
 	public void onReceive(Object arg0) throws Exception {
 		if(arg0 instanceof Configure){
@@ -40,7 +45,7 @@ public class ScanActor extends UntypedActor {
 		}finally{
 			fr.close();
 			reader.close();
-			
+			sendMessage(new Found(filename, lines));
 		}
 		
 		// read lines and match to regex
@@ -48,7 +53,7 @@ public class ScanActor extends UntypedActor {
 	
 	public void sendMessage(Found f){
 		//construct and send found object to CollectionActor
-		
+		collect.tell(f);
 	}
 
 }
