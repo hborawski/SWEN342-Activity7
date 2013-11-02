@@ -15,10 +15,10 @@ public class CollectionActor extends UntypedActor {
                 // TODO Auto-generated method stub
                 if(arg0 instanceof FileCount){
                 		FileCount fc = (FileCount)arg0;
-                		count = fc.getCount;
+                		count = fc.getCount();
                         for(int i = 0; i < count; i++){
                         	actors.add(new ScanActor());
-                        	actors[i].tell(new Configure( fc.filenames[i], fc.pattern, this));                       	
+                        	actors.get(i).tell(new Configure( fc.filenames[i], fc.pattern, this));                       	
                         }
                         
                 }else if(arg0 instanceof Found){
