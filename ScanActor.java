@@ -26,8 +26,8 @@ public class ScanActor extends UntypedActor {
 	public void onReceive(Object message) throws Exception {
 		if(message instanceof Configure){
 			Configure con = (Configure)message;
-			readFile(con.getFilename(), con.getPattern());
 			collect = con.getActorRef();
+			readFile(con.getFilename(), con.getPattern());
 		}
 		
 	}
@@ -50,7 +50,7 @@ public class ScanActor extends UntypedActor {
 			while((s = reader.readLine()) != null){
 				//Match line to pattern
 				Matcher m = p.matcher(s);
-				if(m.matches()){ // Check if it actually matches
+				if(m.find()){ // Check if it actually matches
 					lines.add(lineNumber+" "+s);
 				}
 				lineNumber++;

@@ -23,7 +23,7 @@ public class CGrep {
 	 * @param args
 	 */
 	public static void main(String args[]){
-if(args.length > 0){
+		if(args.length > 0){
 			
 			String pString = args[0];
 			for(int i=1; i<args.length; i++){
